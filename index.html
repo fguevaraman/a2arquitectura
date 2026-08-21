@@ -3,1259 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ä2 Arquitectura & Services — simplificandotustrabajos</title>
+  <title>ä2 Arquitectura — Estudio de arquitectura en Rosario</title>
+  <meta name="description" content="Estudio de arquitectura en Rosario. Diseño y construcción de alto estándar, del proyecto a la llave en mano.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,300;0,400;0,600;0,700;0,800;0,900;1,300;1,400&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --cream: #EDE8DC;
-      --cream-mid: #E5DFCF;
-      --cream-dark: #D9D2BF;
-      --teal: #4FBFBC;
-      --teal-dark: #3A9E9B;
-      --teal-dim: rgba(79,191,188,0.15);
-      --salmon: #E8847A;
-      --salmon-dark: #D4706A;
-      --dark: #1A1A2E;
-      --charcoal: #2A2A3E;
-      --navy: #0D1117;
-      --navy-2: #151C28;
-      --gold: #C9A84C;
-      --gold-light: #DFB962;
-      --gold-pale: #F0DC9A;
-      --gold-dim: rgba(201,168,76,0.12);
-    }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      font-family: 'Barlow', sans-serif;
-      background: var(--cream);
-      color: var(--dark);
-      overflow-x: hidden;
-    }
-
-    /* Grain overlay */
-    body::after {
-      content: '';
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 9999;
-      opacity: 0.03;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
-      background-size: 300px 300px;
-    }
-
-    /* ===================== NAV ===================== */
-    nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 500;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0.9rem 2.5rem;
-      background: rgba(237, 232, 220, 0.88);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(26, 26, 46, 0.07);
-    }
-
-    .nav-logo {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      text-decoration: none;
-    }
-
-    .logo-badge {
-      background: var(--dark);
-      color: white;
-      width: 42px; height: 42px;
-      border-radius: 6px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 900;
-      font-size: 1.35rem;
-      letter-spacing: -1.5px;
-      line-height: 1;
-      position: relative;
-    }
-
-    .logo-badge .uml { color: var(--teal); }
-
-    .logo-text {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 600;
-      font-size: 0.6rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--dark);
-      line-height: 1.4;
-      opacity: 0.55;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 2.5rem;
-      list-style: none;
-    }
-
-    .nav-links a {
-      text-decoration: none;
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 700;
-      font-size: 0.75rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--dark);
-      opacity: 0.45;
-      transition: opacity 0.2s;
-    }
-    .nav-links a:hover { opacity: 1; }
-
-    .nav-cta {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 800;
-      font-size: 0.75rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      text-decoration: none;
-      padding: 0.6rem 1.4rem;
-      border-radius: 999px;
-      background: var(--dark);
-      color: var(--cream);
-      transition: background 0.2s;
-    }
-    .nav-cta:hover { background: var(--teal-dark); }
-
-    /* ===================== HERO ===================== */
-    #hero {
-      min-height: 100vh;
-      background: var(--cream);
-      display: grid;
-      place-items: center;
-      padding: 6rem 2rem 4rem;
-      position: relative;
-      overflow: hidden;
-    }
-
-    /* diagonal stripe field right side */
-    .hero-stripes {
-      position: absolute;
-      top: 0; right: 0;
-      width: 42%; height: 100%;
-      background: repeating-linear-gradient(
-        -48deg,
-        transparent,
-        transparent 14px,
-        rgba(26,26,46,0.04) 14px,
-        rgba(26,26,46,0.04) 16px
-      );
-      pointer-events: none;
-    }
-
-    /* stripe field left side, lighter */
-    .hero-stripes-left {
-      position: absolute;
-      top: 0; left: 0;
-      width: 15%; height: 100%;
-      background: repeating-linear-gradient(
-        48deg,
-        transparent,
-        transparent 14px,
-        rgba(26,26,46,0.025) 14px,
-        rgba(26,26,46,0.025) 16px
-      );
-      pointer-events: none;
-    }
-
-    .hero-content {
-      position: relative;
-      z-index: 2;
-      text-align: center;
-    }
-
-    .hero-eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      background: var(--dark);
-      color: white;
-      padding: 0.35rem 1rem 0.35rem 0.55rem;
-      border-radius: 999px;
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 700;
-      font-size: 0.68rem;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      margin-bottom: 2.5rem;
-      animation: fadeDown 0.8s ease both;
-    }
-
-    .eyebrow-dot {
-      width: 8px; height: 8px;
-      background: var(--teal);
-      border-radius: 50%;
-      animation: breathe 2.5s ease-in-out infinite;
-    }
-
-    @keyframes breathe {
-      0%,100% { transform: scale(1); opacity: 1; }
-      50% { transform: scale(0.75); opacity: 0.5; }
-    }
-
-    .hero-wordmark {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 900;
-      font-size: clamp(5.5rem, 17vw, 15rem);
-      line-height: 0.82;
-      letter-spacing: -0.03em;
-      color: var(--dark);
-      animation: fadeUp 0.9s 0.1s ease both;
-    }
-
-    .hero-wordmark .wm-uml { color: var(--teal); }
-    .hero-wordmark .wm-two { color: var(--salmon); }
-
-    .hero-arch {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 600;
-      font-size: clamp(0.75rem, 2vw, 1.1rem);
-      letter-spacing: 0.45em;
-      text-transform: uppercase;
-      color: var(--dark);
-      opacity: 0.38;
-      margin-top: 0.75rem;
-      margin-bottom: 0.4rem;
-      animation: fadeUp 0.9s 0.2s ease both;
-    }
-
-    .hero-tagline {
-      font-family: 'Barlow', sans-serif;
-      font-style: italic;
-      font-weight: 300;
-      font-size: clamp(1rem, 1.8vw, 1.2rem);
-      color: var(--dark);
-      opacity: 0.5;
-      margin-bottom: 3.5rem;
-      animation: fadeUp 0.9s 0.3s ease both;
-    }
-
-    .hero-tagline b {
-      font-style: normal;
-      font-weight: 600;
-      color: var(--teal-dark);
-      opacity: 1;
-    }
-
-    .hero-ctas {
-      display: flex;
-      gap: 1rem;
-      justify-content: center;
-      flex-wrap: wrap;
-      animation: fadeUp 0.9s 0.4s ease both;
-    }
-
-    .btn-dark {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.6rem;
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 800;
-      font-size: 1rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      text-decoration: none;
-      padding: 1rem 2.4rem;
-      border-radius: 999px;
-      background: var(--dark);
-      color: var(--cream);
-      border: 2px solid var(--dark);
-      transition: all 0.25s;
-    }
-    .btn-dark:hover { background: var(--teal); border-color: var(--teal); transform: translateY(-2px); }
-
-    .btn-outline {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.6rem;
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 800;
-      font-size: 1rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      text-decoration: none;
-      padding: 1rem 2.4rem;
-      border-radius: 999px;
-      background: transparent;
-      color: var(--dark);
-      border: 2px solid var(--dark);
-      transition: all 0.25s;
-    }
-    .btn-outline:hover { background: var(--dark); color: var(--cream); transform: translateY(-2px); }
-
-    /* floating decorative SVGs */
-    .hero-deco {
-      position: absolute;
-      opacity: 0.1;
-      pointer-events: none;
-    }
-    .hd-1 { top: 18%; left: 6%; transform: rotate(-12deg); animation: float 7s ease-in-out infinite; }
-    .hd-2 { bottom: 18%; left: 9%; transform: rotate(8deg); animation: float 9s 1s ease-in-out infinite reverse; }
-    .hd-3 { top: 20%; right: 9%; transform: rotate(6deg); animation: float 8s 2s ease-in-out infinite; }
-    .hd-4 { bottom: 22%; right: 7%; transform: rotate(-9deg); animation: float 6s 0.5s ease-in-out infinite reverse; }
-
-    @keyframes float {
-      0%,100% { transform-origin: center; transform: translateY(0) rotate(var(--r,0deg)); }
-      50% { transform: translateY(-12px) rotate(var(--r,0deg)); }
-    }
-
-    /* scroll cue */
-    .hero-scroll {
-      position: absolute;
-      bottom: 2rem;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.4rem;
-      opacity: 0.3;
-      animation: fadeUp 1s 1s ease both;
-    }
-    .hero-scroll span {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.6rem;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-    }
-    .scroll-line {
-      width: 1px; height: 40px;
-      background: var(--dark);
-      animation: scrollPulse 2s ease-in-out infinite;
-    }
-    @keyframes scrollPulse {
-      0% { transform: scaleY(0); transform-origin: top; }
-      50% { transform: scaleY(1); transform-origin: top; }
-      51% { transform: scaleY(1); transform-origin: bottom; }
-      100% { transform: scaleY(0); transform-origin: bottom; }
-    }
-
-    /* ===================== SECTION UTILITY ===================== */
-    .section-container {
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .section-label {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 700;
-      font-size: 0.65rem;
-      letter-spacing: 0.35em;
-      text-transform: uppercase;
-      color: var(--teal-dark);
-      margin-bottom: 0.5rem;
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-    }
-
-    .section-label::before {
-      content: '';
-      width: 24px;
-      height: 2px;
-      background: var(--teal);
-      display: block;
-    }
-
-    .section-title {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 900;
-      font-size: clamp(2.8rem, 7vw, 5.5rem);
-      line-height: 0.88;
-      text-transform: uppercase;
-      letter-spacing: -0.02em;
-      color: var(--dark);
-    }
-
-    .section-desc {
-      font-family: 'Barlow', sans-serif;
-      font-weight: 400;
-      font-size: 1.05rem;
-      line-height: 1.75;
-      color: var(--dark);
-      opacity: 0.55;
-      max-width: 520px;
-    }
-
-    /* ===================== PLOTEOS ===================== */
-    #ploteos {
-      padding: 7rem 2.5rem;
-      background: var(--cream-mid);
-      position: relative;
-    }
-
-    .ploteos-top {
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      margin-bottom: 4.5rem;
-      gap: 2rem;
-    }
-
-    .ploteos-top-left {}
-    .ploteos-top-right {}
-
-    .ploteos-top-right p {
-      font-family: 'Barlow', sans-serif;
-      font-size: 1rem;
-      line-height: 1.7;
-      color: var(--dark);
-      opacity: 0.52;
-      max-width: 380px;
-      text-align: right;
-    }
-
-    /* Cards grid */
-    .cards-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2.5rem;
-    }
-
-    /* Hung card with binder clip */
-    .ploteo-card {
-      background: var(--cream);
-      border-radius: 18px;
-      border: 2px solid rgba(26,26,46,0.1);
-      padding: 3rem 2.5rem 2.5rem;
-      position: relative;
-      margin-top: 30px;
-      box-shadow: 5px 8px 0 rgba(26,26,46,0.07), 0 24px 48px rgba(26,26,46,0.06);
-      transition: transform 0.35s ease, box-shadow 0.35s ease;
-    }
-
-    .ploteo-card:hover {
-      transform: translateY(-5px) rotate(0.4deg);
-      box-shadow: 7px 12px 0 rgba(26,26,46,0.09), 0 36px 64px rgba(26,26,46,0.1);
-    }
-
-    /* binder clip at top */
-    .clip {
-      position: absolute;
-      top: -28px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 28px;
-    }
-
-    /* Abierto badge */
-    .badge-abierto {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      background: var(--dark);
-      color: var(--cream);
-      border-radius: 999px;
-      padding: 0.3rem 0.75rem 0.3rem 0.4rem;
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 700;
-      font-size: 0.68rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      margin-bottom: 1.75rem;
-    }
-
-    .badge-dot {
-      width: 7px; height: 7px;
-      background: var(--teal);
-      border-radius: 50%;
-      animation: breathe 2s ease-in-out infinite;
-    }
-
-    .badge-abierto .badge-num { color: var(--teal); }
-
-    /* card illustration area */
-    .card-illo {
-      height: 155px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 1.75rem;
-    }
-
-    .card-location {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 900;
-      font-size: 2.6rem;
-      text-transform: uppercase;
-      letter-spacing: 0.02em;
-      line-height: 0.9;
-      color: var(--dark);
-      margin-bottom: 0.2rem;
-    }
-
-    .card-location .accent-teal { color: var(--teal); }
-
-    .card-tag {
-      font-family: 'Barlow', sans-serif;
-      font-weight: 500;
-      font-size: 0.72rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--dark);
-      opacity: 0.38;
-      margin-bottom: 1.5rem;
-    }
-
-    .card-hours-row {
-      display: flex;
-      align-items: flex-start;
-      gap: 0.8rem;
-      margin-bottom: 1.75rem;
-    }
-
-    .hours-icon {
-      width: 24px; height: 24px;
-      border-radius: 50%;
-      background: var(--salmon);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      margin-top: 1px;
-    }
-
-    .hours-icon svg { width: 12px; height: 12px; }
-
-    .hours-text {
-      font-family: 'Barlow', sans-serif;
-      font-size: 0.9rem;
-      line-height: 1.55;
-      color: var(--dark);
-      opacity: 0.65;
-    }
-
-    .hours-text strong { font-weight: 700; color: var(--dark); opacity: 1; }
-
-    .card-divider {
-      height: 1px;
-      background: rgba(26,26,46,0.08);
-      margin-bottom: 1.5rem;
-    }
-
-    .card-email-link {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-      text-decoration: none;
-      border: 2px solid var(--dark);
-      border-radius: 999px;
-      padding: 0.9rem 1.5rem;
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 700;
-      font-size: 0.9rem;
-      letter-spacing: 0.04em;
-      color: var(--dark);
-      transition: all 0.25s;
-    }
-
-    .card-email-link:hover {
-      background: var(--dark);
-      color: var(--cream);
-    }
-
-    /* ===================== COMO FUNCIONA ===================== */
-    #como-funciona {
-      padding: 7rem 2.5rem;
-      background: var(--cream);
-    }
-
-    .cf-header {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 3rem;
-      margin-bottom: 5rem;
-    }
-
-    .cf-header-right p {
-      font-family: 'Barlow', sans-serif;
-      font-size: 1rem;
-      line-height: 1.7;
-      color: var(--dark);
-      opacity: 0.5;
-      max-width: 350px;
-      padding-top: 1.5rem;
-    }
-
-    .steps-row {
-      display: grid;
-      grid-template-columns: 1fr auto 1fr auto 1fr;
-      gap: 0;
-      align-items: start;
-    }
-
-    .step {
-      padding: 2.5rem;
-      background: var(--cream-mid);
-      border-radius: 16px;
-      border: 1.5px solid rgba(26,26,46,0.07);
-      position: relative;
-    }
-
-    .step-num {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 900;
-      font-size: 5rem;
-      line-height: 1;
-      color: var(--cream-dark);
-      position: absolute;
-      top: 1.5rem; right: 1.75rem;
-      user-select: none;
-    }
-
-    .step-icon-wrap {
-      width: 54px; height: 54px;
-      background: var(--dark);
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 1.5rem;
-    }
-
-    .step h3 {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 800;
-      font-size: 1.6rem;
-      text-transform: uppercase;
-      letter-spacing: 0.02em;
-      color: var(--dark);
-      margin-bottom: 0.75rem;
-      line-height: 1.05;
-    }
-
-    .step p {
-      font-family: 'Barlow', sans-serif;
-      font-size: 0.9rem;
-      line-height: 1.65;
-      color: var(--dark);
-      opacity: 0.55;
-    }
-
-    .step-arrow {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0 1rem;
-      padding-top: 2rem;
-      color: var(--teal);
-    }
-
-    .step-email-highlight {
-      display: inline-block;
-      background: var(--teal-dim);
-      color: var(--teal-dark);
-      border-radius: 4px;
-      padding: 0.1rem 0.4rem;
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 700;
-      font-size: 0.85rem;
-      letter-spacing: 0.03em;
-    }
-
-    /* ===================== ESTUDIO ARQ (DARK) ===================== */
-    #estudio {
-      padding: 7rem 2.5rem;
-      background: var(--navy);
-      color: white;
-      position: relative;
-      overflow: hidden;
-    }
-
-    /* Islamic tile pattern */
-    #estudio::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Cg fill='none' stroke='rgba(201,168,76,0.06)' stroke-width='0.8'%3E%3Cpolygon points='30,2 58,16 58,44 30,58 2,44 2,16'/%3E%3Cpolygon points='30,10 50,20 50,40 30,50 10,40 10,20'/%3E%3Cline x1='30' y1='2' x2='30' y2='10'/%3E%3Cline x1='58' y1='16' x2='50' y2='20'/%3E%3Cline x1='58' y1='44' x2='50' y2='40'/%3E%3Cline x1='30' y1='58' x2='30' y2='50'/%3E%3Cline x1='2' y1='44' x2='10' y2='40'/%3E%3Cline x1='2' y1='16' x2='10' y2='20'/%3E%3C/g%3E%3C/svg%3E");
-      opacity: 0.8;
-      pointer-events: none;
-    }
-
-    #estudio::after {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, var(--gold), transparent);
-    }
-
-    .estudio-inner {
-      max-width: 1200px;
-      margin: 0 auto;
-      position: relative;
-      z-index: 1;
-    }
-
-    .estudio-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 6rem;
-      align-items: center;
-    }
-
-    .estudio-left {}
-
-    .estudio-label {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 700;
-      font-size: 0.65rem;
-      letter-spacing: 0.4em;
-      text-transform: uppercase;
-      color: var(--gold);
-      opacity: 0.7;
-      margin-bottom: 0.6rem;
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-    }
-
-    .estudio-label::before {
-      content: '';
-      width: 24px; height: 1px;
-      background: var(--gold);
-      opacity: 0.5;
-    }
-
-    .estudio-title {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 900;
-      font-size: clamp(2.5rem, 6vw, 5rem);
-      line-height: 0.88;
-      text-transform: uppercase;
-      letter-spacing: -0.01em;
-      color: white;
-      margin-bottom: 2rem;
-    }
-
-    .estudio-title .gold { color: var(--gold); }
-
-    .estudio-desc {
-      font-family: 'Barlow', sans-serif;
-      font-weight: 300;
-      font-size: 1.05rem;
-      line-height: 1.8;
-      color: rgba(255,255,255,0.45);
-      margin-bottom: 3rem;
-    }
-
-    .estudio-services {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 0.6rem;
-    }
-
-    .estudio-services li {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 700;
-      font-size: 1rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.6);
-    }
-
-    .estudio-services li::before {
-      content: '';
-      width: 20px; height: 1px;
-      background: var(--gold);
-      opacity: 0.5;
-      flex-shrink: 0;
-    }
-
-    .estudio-right {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.5px;
-      background: rgba(201,168,76,0.2);
-      border: 1px solid rgba(201,168,76,0.2);
-      border-radius: 4px;
-      overflow: hidden;
-    }
-
-    .estudio-stat {
-      background: rgba(13,17,23,0.95);
-      padding: 2rem 1.75rem;
-    }
-
-    .stat-val {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 900;
-      font-size: 3.2rem;
-      color: var(--gold);
-      line-height: 1;
-      margin-bottom: 0.35rem;
-    }
-
-    .stat-lbl {
-      font-family: 'Barlow', sans-serif;
-      font-size: 0.72rem;
-      color: rgba(255,255,255,0.3);
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      line-height: 1.4;
-    }
-
-    /* ===================== DOHKO PROJECT ===================== */
-    #dohko {
-      padding: 7rem 2.5rem;
-      background: var(--navy-2);
-      color: white;
-      position: relative;
-      overflow: hidden;
-    }
-
-    /* compass rose grid bg */
-    #dohko::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Ccircle cx='50' cy='50' r='48' fill='none' stroke='rgba(201,168,76,0.04)' stroke-width='0.5'/%3E%3Ccircle cx='50' cy='50' r='35' fill='none' stroke='rgba(201,168,76,0.03)' stroke-width='0.5'/%3E%3Ccircle cx='50' cy='50' r='20' fill='none' stroke='rgba(201,168,76,0.03)' stroke-width='0.5'/%3E%3Cline x1='50' y1='2' x2='50' y2='98' stroke='rgba(201,168,76,0.025)' stroke-width='0.5'/%3E%3Cline x1='2' y1='50' x2='98' y2='50' stroke='rgba(201,168,76,0.025)' stroke-width='0.5'/%3E%3Cline x1='16' y1='16' x2='84' y2='84' stroke='rgba(201,168,76,0.02)' stroke-width='0.5'/%3E%3Cline x1='84' y1='16' x2='16' y2='84' stroke='rgba(201,168,76,0.02)' stroke-width='0.5'/%3E%3C/svg%3E");
-      pointer-events: none;
-    }
-
-    #dohko::after {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(201,168,76,0.3), transparent);
-    }
-
-    .dohko-inner {
-      max-width: 1200px;
-      margin: 0 auto;
-      position: relative;
-      z-index: 1;
-    }
-
-    .dohko-header {
-      display: flex;
-      align-items: center;
-      gap: 2.5rem;
-      margin-bottom: 5rem;
-    }
-
-    .dohko-rose-wrap { flex-shrink: 0; }
-
-    .dohko-title-block {}
-
-    .dohko-project-label {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 700;
-      font-size: 0.62rem;
-      letter-spacing: 0.4em;
-      text-transform: uppercase;
-      color: var(--gold);
-      opacity: 0.6;
-      margin-bottom: 0.3rem;
-    }
-
-    .dohko-name {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 900;
-      font-size: clamp(2.5rem, 5.5vw, 4.5rem);
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: var(--gold);
-      line-height: 0.88;
-    }
-
-    .dohko-locale {
-      font-family: 'Cormorant Garamond', serif;
-      font-style: italic;
-      font-weight: 300;
-      font-size: 1.5rem;
-      color: rgba(255,255,255,0.35);
-      margin-top: 0.25rem;
-    }
-
-    .dohko-content {
-      display: grid;
-      grid-template-columns: 1.2fr 0.8fr;
-      gap: 5rem;
-      align-items: start;
-    }
-
-    .dohko-features {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .dohko-features li {
-      display: flex;
-      align-items: center;
-      gap: 1.25rem;
-      padding: 0.85rem 0;
-      border-bottom: 1px solid rgba(201,168,76,0.1);
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 600;
-      font-size: 1rem;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.65);
-      transition: color 0.2s;
-    }
-
-    .dohko-features li:hover { color: rgba(255,255,255,0.9); }
-
-    .dohko-features li::before {
-      content: '';
-      width: 6px; height: 6px;
-      border-radius: 50%;
-      background: var(--gold);
-      flex-shrink: 0;
-      opacity: 0.7;
-    }
-
-    .dohko-sidebar {}
-
-    .sidebar-card {
-      background: rgba(201,168,76,0.04);
-      border: 1px solid rgba(201,168,76,0.18);
-      border-radius: 8px;
-      padding: 2.5rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .sidebar-card-title {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 800;
-      font-size: 0.72rem;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 2rem;
-      opacity: 0.7;
-    }
-
-    .specs-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.75rem;
-    }
-
-    .spec-val {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 900;
-      font-size: 2.4rem;
-      color: var(--gold-light);
-      line-height: 1;
-    }
-
-    .spec-lbl {
-      font-family: 'Barlow', sans-serif;
-      font-size: 0.68rem;
-      color: rgba(255,255,255,0.3);
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      margin-top: 0.25rem;
-      line-height: 1.4;
-    }
-
-    .sidebar-contact {
-      border-top: 1px solid rgba(201,168,76,0.12);
-      padding-top: 1.5rem;
-    }
-
-    .sidebar-contact p {
-      font-family: 'Barlow', sans-serif;
-      font-size: 0.78rem;
-      color: rgba(255,255,255,0.3);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-bottom: 1rem;
-    }
-
-    .btn-gold {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-      text-decoration: none;
-      border: 1px solid rgba(201,168,76,0.5);
-      border-radius: 4px;
-      padding: 0.9rem 1.5rem;
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 800;
-      font-size: 0.85rem;
-      letter-spacing: 0.2em;
-      color: var(--gold);
-      text-transform: uppercase;
-      transition: all 0.25s;
-    }
-
-    .btn-gold:hover {
-      background: var(--gold);
-      color: var(--navy);
-      border-color: var(--gold);
-    }
-
-    /* ===================== CONTACTO ===================== */
-    #contacto {
-      padding: 7rem 2.5rem;
-      background: var(--cream-mid);
-      position: relative;
-    }
-
-    .contacto-inner {
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-
-    .contacto-top {
-      text-align: center;
-      margin-bottom: 5rem;
-    }
-
-    .contacto-top .section-label { justify-content: center; }
-    .contacto-top .section-label::before { display: none; }
-
-    .contacto-top .section-title {
-      margin-top: 0.5rem;
-      margin-bottom: 1rem;
-    }
-
-    .contacto-top p {
-      font-family: 'Barlow', sans-serif;
-      font-size: 1rem;
-      line-height: 1.7;
-      color: var(--dark);
-      opacity: 0.5;
-      max-width: 480px;
-      margin: 0 auto;
-    }
-
-    .contact-cards-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2rem;
-    }
-
-    .contact-card {
-      background: var(--cream);
-      border: 2px solid rgba(26,26,46,0.09);
-      border-radius: 18px;
-      padding: 3rem 2.5rem;
-      box-shadow: 4px 6px 0 rgba(26,26,46,0.06);
-      position: relative;
-      margin-top: 28px;
-      transition: transform 0.3s;
-    }
-
-    .contact-card:hover { transform: translateY(-4px); }
-
-    .contact-type {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 700;
-      font-size: 0.65rem;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: var(--teal-dark);
-      margin-bottom: 0.5rem;
-    }
-
-    .contact-name {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 900;
-      font-size: 2.4rem;
-      text-transform: uppercase;
-      color: var(--dark);
-      line-height: 0.9;
-      margin-bottom: 0.5rem;
-    }
-
-    .contact-hours-mini {
-      font-family: 'Barlow', sans-serif;
-      font-size: 0.85rem;
-      color: var(--dark);
-      opacity: 0.5;
-      margin-bottom: 2rem;
-    }
-
-    .contact-divider {
-      height: 1px;
-      background: rgba(26,26,46,0.08);
-      margin-bottom: 2rem;
-    }
-
-    /* ===================== FOOTER ===================== */
-    footer {
-      background: var(--dark);
-      padding: 3rem 2.5rem;
-    }
-
-    .footer-inner {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .footer-brand {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-    }
-
-    .footer-logo-badge {
-      background: rgba(255,255,255,0.06);
-      color: white;
-      width: 42px; height: 42px;
-      border-radius: 6px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 900;
-      font-size: 1.35rem;
-      letter-spacing: -1.5px;
-    }
-
-    .footer-logo-badge .uml { color: var(--teal); }
-
-    .footer-tagline {
-      font-family: 'Barlow', sans-serif;
-      font-style: italic;
-      font-weight: 300;
-      font-size: 0.85rem;
-      color: rgba(255,255,255,0.25);
-    }
-
-    .footer-tagline b { font-style: normal; font-weight: 500; color: rgba(255,255,255,0.45); }
-
-    .footer-center {
-      text-align: center;
-    }
-
-    .footer-center a {
-      display: block;
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 600;
-      font-size: 0.75rem;
-      letter-spacing: 0.1em;
-      color: rgba(255,255,255,0.25);
-      text-decoration: none;
-      margin-bottom: 0.25rem;
-      transition: color 0.2s;
-    }
-
-    .footer-center a:hover { color: rgba(255,255,255,0.6); }
-
-    .footer-right {
-      text-align: right;
-      font-family: 'Barlow', sans-serif;
-      font-size: 0.75rem;
-      color: rgba(255,255,255,0.2);
-      line-height: 1.6;
-    }
-
-    .footer-right a { color: rgba(255,255,255,0.35); text-decoration: none; }
-    .footer-right a:hover { color: rgba(255,255,255,0.6); }
-
-    .footer-copy {
-      display: block;
-      margin-top: 2rem;
-      text-align: center;
-      font-family: 'Barlow', sans-serif;
-      font-size: 0.7rem;
-      color: rgba(255,255,255,0.12);
-      letter-spacing: 0.08em;
-      padding-top: 2rem;
-      border-top: 1px solid rgba(255,255,255,0.05);
-      max-width: 1200px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    /* ===================== SCROLL REVEALS ===================== */
-    .reveal {
-      opacity: 0;
-      transform: translateY(28px);
-      transition: opacity 0.75s ease, transform 0.75s ease;
-    }
-    .reveal.in { opacity: 1; transform: none; }
-    .rv-d1 { transition-delay: 0.1s; }
-    .rv-d2 { transition-delay: 0.2s; }
-    .rv-d3 { transition-delay: 0.3s; }
-    .rv-d4 { transition-delay: 0.4s; }
-
-    /* ===================== ANIMATIONS ===================== */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(24px); }
-      to { opacity: 1; transform: none; }
-    }
-    @keyframes fadeDown {
-      from { opacity: 0; transform: translateY(-12px); }
-      to { opacity: 1; transform: none; }
-    }
-
-    /* ===================== RESPONSIVE ===================== */
-    @media (max-width: 900px) {
-      .nav-links, .nav-cta { display: none; }
-      .ploteos-top { flex-direction: column; }
-      .ploteos-top-right p { text-align: left; }
-      .cards-row { grid-template-columns: 1fr; }
-      .cf-header { flex-direction: column; }
-      .steps-row { grid-template-columns: 1fr; gap: 1.5rem; }
-      .step-arrow { transform: rotate(90deg); display: none; }
-      .estudio-grid { grid-template-columns: 1fr; gap: 3rem; }
-      .estudio-right { grid-template-columns: 1fr 1fr; }
-      .dohko-header { flex-direction: column; align-items: flex-start; }
-      .dohko-content { grid-template-columns: 1fr; gap: 3rem; }
-      .contact-cards-row { grid-template-columns: 1fr; }
-      .footer-inner { flex-direction: column; gap: 2rem; text-align: center; }
-      .footer-right { text-align: center; }
-      .footer-center { display: none; }
-    }
-
-    @media (max-width: 600px) {
-      #hero { padding: 5rem 1.5rem 3rem; }
-      section, #ploteos, #como-funciona, #estudio, #dohko, #contacto { padding: 5rem 1.5rem; }
-      nav { padding: 0.9rem 1.5rem; }
-      .estudio-right { grid-template-columns: 1fr 1fr; }
-      .specs-grid { grid-template-columns: 1fr 1fr; }
-    }
-  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
 
   <!-- NAV -->
   <nav>
-    <a href="#hero" class="nav-logo">
-      <div class="logo-badge"><span class="uml">ä</span>2</div>
-      <div class="logo-text">Arquitectura<br>&amp; Services</div>
+    <a href="#hero" class="nav-logo" aria-label="ä2 Arquitectura — inicio">
+      <img src="assets/a2-mark-dark.png" alt="ä2 Arquitectura" class="nav-logo-img">
     </a>
     <ul class="nav-links">
-      <li><a href="#ploteos">Ploteos</a></li>
-      <li><a href="#como-funciona">¿Cómo funciona?</a></li>
       <li><a href="#estudio">Estudio</a></li>
-      <li><a href="#dohko">Proyectos</a></li>
+      <li><a href="#proyectos">Proyectos</a></li>
+      <li><a href="ploteos.html">Ploteos</a></li>
       <li><a href="#contacto">Contacto</a></li>
     </ul>
     <a href="#contacto" class="nav-cta">Contactar</a>
@@ -1263,355 +28,30 @@
 
   <!-- HERO -->
   <section id="hero">
-    <div class="hero-stripes"></div>
-    <div class="hero-stripes-left"></div>
-
-    <!-- floating deco tools -->
-    <div class="hero-deco hd-1">
-      <svg width="72" height="72" viewBox="0 0 72 72" fill="none">
-        <!-- Ruler -->
-        <rect x="4" y="28" width="64" height="16" rx="3" fill="var(--dark)"/>
-        <line x1="16" y1="28" x2="16" y2="22" stroke="var(--dark)" stroke-width="2"/>
-        <line x1="28" y1="28" x2="28" y2="24" stroke="var(--dark)" stroke-width="2"/>
-        <line x1="40" y1="28" x2="40" y2="22" stroke="var(--dark)" stroke-width="2"/>
-        <line x1="52" y1="28" x2="52" y2="24" stroke="var(--dark)" stroke-width="2"/>
-      </svg>
-    </div>
-
-    <div class="hero-deco hd-2">
-      <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
-        <!-- Set square / triangle -->
-        <polygon points="8,56 56,56 8,8" fill="none" stroke="var(--dark)" stroke-width="3" stroke-linejoin="round"/>
-        <line x1="8" y1="56" x2="8" y2="8" stroke="var(--dark)" stroke-width="3"/>
-      </svg>
-    </div>
-
-    <div class="hero-deco hd-3">
-      <svg width="68" height="68" viewBox="0 0 68 68" fill="none">
-        <!-- Compass -->
-        <circle cx="34" cy="34" r="28" stroke="var(--dark)" stroke-width="2.5"/>
-        <circle cx="34" cy="34" r="4" fill="var(--dark)"/>
-        <polygon points="34,8 30,30 34,26 38,30" fill="var(--dark)"/>
-        <polygon points="34,60 38,38 34,42 30,38" fill="var(--dark)" opacity="0.4"/>
-        <polygon points="8,34 30,30 26,34 30,38" fill="var(--dark)" opacity="0.4"/>
-        <polygon points="60,34 38,38 42,34 38,30" fill="var(--dark)" opacity="0.4"/>
-      </svg>
-    </div>
-
-    <div class="hero-deco hd-4">
-      <svg width="60" height="60" viewBox="0 0 60 60" fill="none">
-        <!-- Pencil -->
-        <rect x="22" y="4" width="16" height="44" rx="2" fill="var(--dark)"/>
-        <polygon points="22,48 38,48 30,58" fill="var(--dark)"/>
-        <rect x="22" y="4" width="16" height="8" rx="2" fill="var(--dark)" opacity="0.5"/>
-        <line x1="22" y1="42" x2="38" y2="42" stroke="var(--cream)" stroke-width="1.5"/>
-      </svg>
-    </div>
-
+    <div class="hero-img"><img src="assets/proyectos/hero.jpg" alt="Proyecto residencial de alto estándar de ä2 Arquitectura"></div>
+    <div class="hero-scrim"></div>
     <div class="hero-content">
-      <div class="hero-eyebrow">
-        <span class="eyebrow-dot"></span>
-        Arquitectura &amp; Services — Córdoba, Argentina
-      </div>
-
-      <div class="hero-wordmark">
-        <span class="wm-uml">ä</span><span class="wm-two">2</span>
-      </div>
-
-      <p class="hero-arch">Arquitectura &nbsp;&bull;&nbsp; Services</p>
-
-      <p class="hero-tagline">
-        simplificando<b>tus</b>trabajos
-      </p>
-
+      <p class="hero-eyebrow">Estudio de Arquitectura · Rosario, Argentina</p>
+      <h1 class="hero-title">Diseño y construcción de alto estándar</h1>
+      <p class="hero-sub">Proyectamos y ejecutamos edificios de carácter — del proyecto a la llave en mano, con una mirada contemporánea y materiales de primera categoría.</p>
       <div class="hero-ctas">
-        <a href="#ploteos" class="btn-dark">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
-            <path d="M2 2h12v2H2zM2 5h12v8a1 1 0 01-1 1H3a1 1 0 01-1-1V5zm3 2v5h1V7H5zm3 0v5h1V7H8z"/>
-          </svg>
-          Ploteos
+        <a href="#proyectos" class="btn-solid">
+          Ver proyectos
+          <svg viewBox="0 0 20 12" fill="none"><path d="M0 6h18M14 1l5 5-5 5" stroke="currentColor" stroke-width="1.5"/></svg>
         </a>
-        <a href="#estudio" class="btn-outline">
-          Estudio de Arquitectura →
-        </a>
-      </div>
-    </div>
-
-    <div class="hero-scroll">
-      <span>Scroll</span>
-      <div class="scroll-line"></div>
-    </div>
-  </section>
-
-  <!-- PLOTEOS -->
-  <section id="ploteos">
-    <div class="section-container">
-      <div class="ploteos-top">
-        <div class="ploteos-top-left">
-          <p class="section-label reveal">Servicio principal</p>
-          <h2 class="section-title reveal rv-d1">PLOTEOS<br><span style="color:var(--teal)">Y SERVICIOS</span></h2>
-        </div>
-        <div class="ploteos-top-right reveal rv-d2">
-          <p>Ploteamos tus planos con la máxima calidad. Enviás el archivo, nosotros lo procesamos y lo tenés listo para retirar — en la Facultad o en el Estudio.</p>
-        </div>
-      </div>
-
-      <div class="cards-row">
-
-        <!-- ESTUDIO CARD -->
-        <div class="ploteo-card reveal rv-d1">
-          <!-- binder clip SVG -->
-          <svg class="clip" viewBox="0 0 28 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="10" y="0" width="8" height="20" rx="4" fill="#1A1A2E"/>
-            <rect x="8" y="16" width="12" height="6" rx="2" fill="#2D2D3E"/>
-            <rect x="9" y="22" width="10" height="22" rx="2" fill="#1A1A2E" opacity="0.7"/>
-          </svg>
-
-          <div class="badge-abierto">
-            <span class="badge-dot"></span>
-            Abierto <span class="badge-num">24hs</span>&nbsp;para recibir archivos
-          </div>
-
-          <!-- Isometric megaphone illustration -->
-          <div class="card-illo">
-            <svg width="180" height="150" viewBox="0 0 180 150" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <!-- paper/document base -->
-              <rect x="30" y="90" width="70" height="50" rx="3" fill="#4FBFBC" opacity="0.15"/>
-              <rect x="30" y="90" width="70" height="50" rx="3" stroke="#4FBFBC" stroke-width="1.5" opacity="0.4"/>
-              <!-- paper lines -->
-              <line x1="40" y1="102" x2="88" y2="102" stroke="#4FBFBC" stroke-width="1.5" opacity="0.5"/>
-              <line x1="40" y1="110" x2="88" y2="110" stroke="#4FBFBC" stroke-width="1.5" opacity="0.4"/>
-              <line x1="40" y1="118" x2="72" y2="118" stroke="#4FBFBC" stroke-width="1.5" opacity="0.3"/>
-              <!-- pencil -->
-              <rect x="105" y="88" width="5" height="44" rx="2" transform="rotate(-15 105 88)" fill="#1A1A2E" opacity="0.8"/>
-              <polygon points="102,125 107,124 104,132" fill="#E8847A" opacity="0.9"/>
-              <!-- megaphone body -->
-              <ellipse cx="95" cy="50" rx="22" ry="12" fill="#1A1A2E" opacity="0.9"/>
-              <path d="M73 50 L50 70 L50 30 Z" fill="#1A1A2E" opacity="0.85"/>
-              <ellipse cx="73" cy="50" rx="6" ry="10" fill="#2D2D3E" opacity="0.9"/>
-              <!-- megaphone bell -->
-              <path d="M117 38 L145 28 L145 72 L117 62 Z" fill="#4FBFBC" opacity="0.85"/>
-              <ellipse cx="145" cy="50" rx="8" ry="22" fill="#3A9E9B"/>
-              <ellipse cx="117" cy="50" rx="7" ry="12" fill="#2D2D3E" opacity="0.8"/>
-              <!-- sound waves -->
-              <path d="M152 35 Q162 50 152 65" stroke="#E8847A" stroke-width="2.5" fill="none" stroke-linecap="round" opacity="0.8"/>
-              <path d="M158 28 Q172 50 158 72" stroke="#E8847A" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.5"/>
-              <!-- handle -->
-              <rect x="60" y="62" width="8" height="20" rx="3" fill="#E8847A" opacity="0.85"/>
-              <!-- dot grid shadow (isometric style) -->
-              <circle cx="40" cy="138" r="1.5" fill="#1A1A2E" opacity="0.15"/>
-              <circle cx="50" cy="138" r="1.5" fill="#1A1A2E" opacity="0.15"/>
-              <circle cx="60" cy="138" r="1.5" fill="#1A1A2E" opacity="0.15"/>
-              <circle cx="70" cy="138" r="1.5" fill="#1A1A2E" opacity="0.15"/>
-              <circle cx="80" cy="138" r="1.5" fill="#1A1A2E" opacity="0.15"/>
-            </svg>
-          </div>
-
-          <div class="card-location">MAIL<br>RECEPCIÓN<br><span class="accent-teal">ESTUDIO</span></div>
-          <div class="card-tag">Sede Estudio &mdash; Córdoba</div>
-
-          <div class="card-hours-row">
-            <div class="hours-icon">
-              <svg viewBox="0 0 12 12" fill="white"><path d="M6 1a5 5 0 100 10A5 5 0 006 1zm.5 5.21l-2 1.15-.5-.87 1.5-.87V3h1v3.21z"/></svg>
-            </div>
-            <div class="hours-text">
-              <strong>Podés retirar de 8hs a 14hs</strong><br>
-              y de 16hs a 20hs · Lunes a Viernes
-            </div>
-          </div>
-
-          <div class="card-divider"></div>
-
-          <a href="mailto:consultas@a2online.com.ar" class="card-email-link">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" opacity="0.6"><path d="M2 3h12a1 1 0 011 1v8a1 1 0 01-1 1H2a1 1 0 01-1-1V4a1 1 0 011-1zm6 5.6L3.5 5H12.5L8 8.6zM3 6.2V11h10V6.2L8 9.8 3 6.2z"/></svg>
-            consultas@a2online.com.ar
-          </a>
-        </div>
-
-        <!-- FACULTAD CARD -->
-        <div class="ploteo-card reveal rv-d2">
-          <svg class="clip" viewBox="0 0 28 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="10" y="0" width="8" height="20" rx="4" fill="#1A1A2E"/>
-            <rect x="8" y="16" width="12" height="6" rx="2" fill="#2D2D3E"/>
-            <rect x="9" y="22" width="10" height="22" rx="2" fill="#1A1A2E" opacity="0.7"/>
-          </svg>
-
-          <div class="badge-abierto">
-            <span class="badge-dot"></span>
-            Abierto <span class="badge-num">24hs</span>&nbsp;para recibir archivos
-          </div>
-
-          <!-- Isometric computer/gears illustration -->
-          <div class="card-illo">
-            <svg width="190" height="155" viewBox="0 0 190 155" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <!-- laptop base -->
-              <rect x="20" y="100" width="100" height="6" rx="2" fill="#1A1A2E" opacity="0.9"/>
-              <rect x="10" y="106" width="120" height="4" rx="2" fill="#2D2D3E" opacity="0.6"/>
-              <!-- laptop screen -->
-              <rect x="30" y="52" width="80" height="52" rx="3" fill="#1A1A2E" opacity="0.9"/>
-              <rect x="34" y="56" width="72" height="44" rx="2" fill="#4FBFBC" opacity="0.2"/>
-              <!-- keyboard dots -->
-              <rect x="25" y="96" width="90" height="6" rx="1" fill="#2D2D3E" opacity="0.8"/>
-              <rect x="32" y="97.5" width="5" height="3" rx="0.5" fill="#1A1A2E" opacity="0.5"/>
-              <rect x="40" y="97.5" width="5" height="3" rx="0.5" fill="#1A1A2E" opacity="0.5"/>
-              <rect x="48" y="97.5" width="5" height="3" rx="0.5" fill="#1A1A2E" opacity="0.5"/>
-              <rect x="56" y="97.5" width="5" height="3" rx="0.5" fill="#1A1A2E" opacity="0.5"/>
-              <rect x="64" y="97.5" width="14" height="3" rx="0.5" fill="#1A1A2E" opacity="0.5"/>
-              <rect x="80" y="97.5" width="5" height="3" rx="0.5" fill="#1A1A2E" opacity="0.5"/>
-              <rect x="88" y="97.5" width="5" height="3" rx="0.5" fill="#1A1A2E" opacity="0.5"/>
-              <!-- clock on screen -->
-              <circle cx="70" cy="78" r="20" stroke="#4FBFBC" stroke-width="2.5" fill="none"/>
-              <circle cx="70" cy="78" r="3" fill="#4FBFBC"/>
-              <line x1="70" y1="78" x2="70" y2="63" stroke="#4FBFBC" stroke-width="2" stroke-linecap="round"/>
-              <line x1="70" y1="78" x2="80" y2="82" stroke="#4FBFBC" stroke-width="1.5" stroke-linecap="round"/>
-              <!-- gear big -->
-              <g transform="translate(140, 80)">
-                <circle cx="0" cy="0" r="18" fill="none" stroke="#4FBFBC" stroke-width="2.5" opacity="0.7"/>
-                <circle cx="0" cy="0" r="8" fill="none" stroke="#4FBFBC" stroke-width="2" opacity="0.6"/>
-                <circle cx="0" cy="0" r="3" fill="#4FBFBC" opacity="0.7"/>
-                <!-- gear teeth -->
-                <rect x="-3" y="-22" width="6" height="6" rx="1" fill="#4FBFBC" opacity="0.6"/>
-                <rect x="-3" y="16" width="6" height="6" rx="1" fill="#4FBFBC" opacity="0.6"/>
-                <rect x="-22" y="-3" width="6" height="6" rx="1" fill="#4FBFBC" opacity="0.6"/>
-                <rect x="16" y="-3" width="6" height="6" rx="1" fill="#4FBFBC" opacity="0.6"/>
-                <rect x="11" y="-20" width="5" height="5" rx="1" transform="rotate(45 11 -20)" fill="#4FBFBC" opacity="0.4"/>
-                <rect x="-16" y="-20" width="5" height="5" rx="1" transform="rotate(45 -16 -20)" fill="#4FBFBC" opacity="0.4"/>
-                <rect x="-16" y="15" width="5" height="5" rx="1" transform="rotate(45 -16 15)" fill="#4FBFBC" opacity="0.4"/>
-                <rect x="11" y="15" width="5" height="5" rx="1" transform="rotate(45 11 15)" fill="#4FBFBC" opacity="0.4"/>
-              </g>
-              <!-- gear small -->
-              <g transform="translate(155, 106)">
-                <circle cx="0" cy="0" r="11" fill="none" stroke="#E8847A" stroke-width="2" opacity="0.6"/>
-                <circle cx="0" cy="0" r="4" fill="none" stroke="#E8847A" stroke-width="1.5" opacity="0.5"/>
-                <circle cx="0" cy="0" r="2" fill="#E8847A" opacity="0.6"/>
-                <rect x="-2" y="-14" width="4" height="4" rx="0.5" fill="#E8847A" opacity="0.5"/>
-                <rect x="-2" y="10" width="4" height="4" rx="0.5" fill="#E8847A" opacity="0.5"/>
-                <rect x="-14" y="-2" width="4" height="4" rx="0.5" fill="#E8847A" opacity="0.5"/>
-                <rect x="10" y="-2" width="4" height="4" rx="0.5" fill="#E8847A" opacity="0.5"/>
-              </g>
-              <!-- bar chart accent -->
-              <rect x="150" y="44" width="8" height="28" rx="1" fill="#E8847A" opacity="0.5"/>
-              <rect x="162" y="36" width="8" height="36" rx="1" fill="#E8847A" opacity="0.7"/>
-              <rect x="174" y="52" width="8" height="20" rx="1" fill="#E8847A" opacity="0.4"/>
-              <!-- notepad -->
-              <rect x="18" y="118" width="36" height="28" rx="2" fill="#1A1A2E" opacity="0.7"/>
-              <rect x="22" y="114" width="28" height="6" rx="1" fill="#2D2D3E" opacity="0.6"/>
-              <line x1="23" y1="124" x2="50" y2="124" stroke="#4FBFBC" stroke-width="1" opacity="0.5"/>
-              <line x1="23" y1="130" x2="46" y2="130" stroke="#4FBFBC" stroke-width="1" opacity="0.4"/>
-              <line x1="23" y1="136" x2="40" y2="136" stroke="#4FBFBC" stroke-width="1" opacity="0.3"/>
-            </svg>
-          </div>
-
-          <div class="card-location">MAIL<br>RECEPCIÓN<br><span class="accent-teal">FACULTAD</span></div>
-          <div class="card-tag">Sede Facultad de Arquitectura</div>
-
-          <div class="card-hours-row">
-            <div class="hours-icon">
-              <svg viewBox="0 0 12 12" fill="white"><path d="M6 1a5 5 0 100 10A5 5 0 006 1zm.5 5.21l-2 1.15-.5-.87 1.5-.87V3h1v3.21z"/></svg>
-            </div>
-            <div class="hours-text">
-              <strong>Podés retirar de 7hs a 22hs</strong><br>
-              Lunes a Sábado &mdash; Dentro de la Facultad
-            </div>
-          </div>
-
-          <div class="card-divider"></div>
-
-          <a href="mailto:a2ploteos.facultad@gmail.com" class="card-email-link">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" opacity="0.6"><path d="M2 3h12a1 1 0 011 1v8a1 1 0 01-1 1H2a1 1 0 01-1-1V4a1 1 0 011-1zm6 5.6L3.5 5H12.5L8 8.6zM3 6.2V11h10V6.2L8 9.8 3 6.2z"/></svg>
-            a2ploteos.facultad@gmail.com
-          </a>
-        </div>
-
+        <a href="ploteos.html" class="btn-ghost">Ploteos &amp; servicios</a>
       </div>
     </div>
   </section>
 
-  <!-- COMO FUNCIONA -->
-  <section id="como-funciona">
-    <div class="section-container">
-      <div class="cf-header">
-        <div>
-          <p class="section-label reveal">Proceso</p>
-          <h2 class="section-title reveal rv-d1">¿CÓMO<br>FUNCIONA?</h2>
-        </div>
-        <div class="cf-header-right reveal rv-d2">
-          <p>Tres pasos simples. Desde que enviás el archivo hasta que tenés tus planos en mano — sin complicaciones.</p>
-        </div>
-      </div>
-
-      <div class="steps-row">
-        <div class="step reveal rv-d1">
-          <div class="step-num">01</div>
-          <div class="step-content">
-            <div class="step-icon-wrap">
-              <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
-                <path d="M4 4h18v18H4V4z" stroke="#4FBFBC" stroke-width="1.5" rx="2"/>
-                <path d="M8 9h10M8 13h10M8 17h6" stroke="#4FBFBC" stroke-width="1.5" stroke-linecap="round"/>
-              </svg>
-            </div>
-            <h3>Enviás<br>el archivo</h3>
-            <p>Mandá tus planos por mail a la sede que prefieras: <span class="step-email-highlight">Estudio</span> o <span class="step-email-highlight">Facultad</span>. Recibimos 24 horas, los 7 días.</p>
-          </div>
-        </div>
-
-        <div class="step-arrow reveal rv-d2">
-          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-            <path d="M6 16h20M20 10l6 6-6 6" stroke="var(--teal)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
-
-        <div class="step reveal rv-d2">
-          <div class="step-num">02</div>
-          <div class="step-content">
-            <div class="step-icon-wrap">
-              <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
-                <rect x="3" y="8" width="20" height="14" rx="2" stroke="#4FBFBC" stroke-width="1.5"/>
-                <path d="M7 8V6a6 6 0 0112 0v2" stroke="#4FBFBC" stroke-width="1.5" stroke-linecap="round"/>
-                <circle cx="13" cy="15" r="2.5" fill="#4FBFBC" opacity="0.7"/>
-              </svg>
-            </div>
-            <h3>Procesamos<br>tu ploteo</h3>
-            <p>Nuestro equipo procesa cada trabajo con equipos de alta calidad. Planos de arquitectura con el detalle que necesitás.</p>
-          </div>
-        </div>
-
-        <div class="step-arrow reveal rv-d3">
-          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-            <path d="M6 16h20M20 10l6 6-6 6" stroke="var(--teal)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
-
-        <div class="step reveal rv-d3">
-          <div class="step-num">03</div>
-          <div class="step-content">
-            <div class="step-icon-wrap">
-              <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
-                <path d="M13 3l2.4 7.2H23l-6.2 4.5 2.4 7.2L13 17.5l-6.2 4.4 2.4-7.2L3 10.2h7.6L13 3z" stroke="#4FBFBC" stroke-width="1.5" stroke-linejoin="round"/>
-              </svg>
-            </div>
-            <h3>Retirás<br>cuando querés</h3>
-            <p>En el horario de la sede que elegiste. Facultad: 7 a 22hs. Estudio: 8–14hs y 16–20hs. Sin turnos, sin espera.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ESTUDIO ARQ DARK -->
+  <!-- ESTUDIO -->
   <section id="estudio">
-    <div class="estudio-inner">
+    <div class="container">
       <div class="estudio-grid">
-        <div class="estudio-left">
-          <p class="estudio-label reveal">Estudio de Arquitectura</p>
-          <h2 class="estudio-title reveal rv-d1">
-            DISEÑO Y<br>
-            <span class="gold">CONSTRUCCIÓN</span><br>
-            DE ALTO<br>ESTÁNDAR
-          </h2>
-          <p class="estudio-desc reveal rv-d2">
-            Más que ploteos. Detrás de ä2 hay un estudio de arquitectura que proyecta y ejecuta edificios de carácter. Trabajamos desde la idea hasta la llave en mano, con una mirada contemporánea y materiales de primera categoría.
-          </p>
+        <div>
+          <p class="eyebrow estudio-eyebrow reveal">El Estudio</p>
+          <h2 class="estudio-title reveal rv-d1">Arquitectura <span>que se proyecta y se construye</span></h2>
+          <p class="estudio-desc reveal rv-d2">Detrás de ä2 hay un estudio de arquitectura que proyecta y ejecuta edificios de carácter. Trabajamos desde la idea hasta la llave en mano, con una mirada contemporánea y materiales de primera categoría. ä2 proyecta y IL Muro construye.</p>
           <ul class="estudio-services reveal rv-d3">
             <li>Diseño arquitectónico</li>
             <li>Dirección de obra</li>
@@ -1620,241 +60,251 @@
             <li>Consultoría técnica</li>
           </ul>
         </div>
-
-        <div class="estudio-right reveal rv-d2">
-          <div class="estudio-stat">
-            <div class="stat-val">15+</div>
-            <div class="stat-lbl">Años de<br>trayectoria</div>
-          </div>
-          <div class="estudio-stat">
-            <div class="stat-val">2</div>
-            <div class="stat-lbl">Sedes<br>operativas</div>
-          </div>
-          <div class="estudio-stat">
-            <div class="stat-val">∞</div>
-            <div class="stat-lbl">Planos<br>procesados</div>
-          </div>
-          <div class="estudio-stat">
-            <div class="stat-val">24hs</div>
-            <div class="stat-lbl">Recepción<br>de archivos</div>
-          </div>
+        <div class="estudio-stats reveal rv-d2">
+          <div class="estudio-stat"><div class="stat-val">15+</div><div class="stat-lbl">Años de<br>trayectoria</div></div>
+          <div class="estudio-stat"><div class="stat-val">2</div><div class="stat-lbl">Proyectos<br>Dohko</div></div>
+          <div class="estudio-stat"><div class="stat-val">ABC1</div><div class="stat-lbl">Categoría<br>terminaciones</div></div>
+          <div class="estudio-stat"><div class="stat-val">Rosario</div><div class="stat-lbl">Centro,<br>frente costero</div></div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- DOHKO PROJECT -->
-  <section id="dohko">
-    <div class="dohko-inner">
-      <div class="dohko-header">
-        <div class="dohko-rose-wrap">
-          <!-- DOHKO rose SVG (spiral) -->
-          <svg width="90" height="90" viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="45" cy="45" r="43" stroke="rgba(201,168,76,0.2)" stroke-width="0.5"/>
-            <!-- spiral rose approximation with concentric arcs -->
-            <g stroke="var(--gold)" stroke-width="1.5" fill="none" opacity="0.9">
-              <path d="M45 45 Q55 30 60 40 Q65 50 55 58 Q45 65 35 55 Q25 45 35 32 Q45 18 62 25 Q78 33 75 50 Q72 67 55 72 Q38 77 27 62 Q16 47 22 28 Q28 8 50 8 Q72 8 80 28"/>
-              <path d="M45 45 Q52 35 57 43 Q62 51 53 58 Q44 64 36 56 Q27 47 36 35 Q45 23 60 29 Q74 35 72 50 Q70 65 55 70 Q40 75 30 62 Q20 49 26 32"/>
-              <circle cx="45" cy="45" r="4" fill="var(--gold)" opacity="0.3"/>
-              <circle cx="45" cy="45" r="2" fill="var(--gold)" opacity="0.6"/>
-            </g>
-          </svg>
+  <!-- PROYECTOS -->
+  <section id="proyectos">
+    <div class="container">
+      <div class="sec-head">
+        <div>
+          <p class="eyebrow reveal">Obra</p>
+          <h2 class="sec-title reveal rv-d1">Proyectos</h2>
         </div>
-        <div class="dohko-title-block">
-          <p class="dohko-project-label">Proyecto destacado — En construcción</p>
-          <div class="dohko-name">DOHKO</div>
-          <div class="dohko-locale">España</div>
-        </div>
+        <p class="sec-head-desc reveal rv-d2">Desarrollos residenciales de alto estándar en el centro de Rosario, a metros del frente costero. Proyectados por ä2 y construidos junto a IL Muro.</p>
       </div>
 
-      <div class="dohko-content">
-        <div>
-          <ul class="dohko-features reveal">
-            <li>8 Pisos exclusivos &mdash; 3 dormitorios</li>
-            <li>180 m² por unidad</li>
-            <li>Terminaciones categoría ABC1</li>
-            <li>Balcón terraza al frente + contrafrente</li>
-            <li>Dormitorio principal con baño en suite y vestidor</li>
-            <li>Muebles cocina laqueados + mesadas mármol</li>
-            <li>3 baños + lavadero + despensa</li>
-            <li>Calefacción por radiadores</li>
-            <li>Refrigeración multisplit</li>
-            <li>SUM vista panorámica 50 pers. + parrillero</li>
-            <li>Pileta + solarium con ducha + baño</li>
-            <li>Cocheras + bauleras</li>
-            <li>Sistema de control de acceso y vigilancia</li>
-          </ul>
+      <!-- DOHKO MORENO -->
+      <article class="project reveal">
+        <div class="project-head">
+          <div>
+            <span class="project-label">Proyecto 01 — En construcción</span>
+            <h3 class="project-name">Dohko <span>Moreno</span></h3>
+            <p class="project-locale">Moreno 231 — Rosario, Centro</p>
+          </div>
+          <p class="project-memoria">Su privilegiado emplazamiento, cercano al frente costero, se conjuga con la proximidad a Bv. Oroño y Av. Wheelwright, garantizando una rápida conexión con los corredores viales y el paseo ribereño.</p>
         </div>
 
-        <div class="dohko-sidebar reveal rv-d2">
-          <div class="sidebar-card">
-            <div class="sidebar-card-title">Ficha técnica</div>
-            <div class="specs-grid">
-              <div>
-                <div class="spec-val">8</div>
-                <div class="spec-lbl">Pisos<br>exclusivos</div>
-              </div>
-              <div>
-                <div class="spec-val">180</div>
-                <div class="spec-lbl">m² por<br>unidad</div>
-              </div>
-              <div>
-                <div class="spec-val">3</div>
-                <div class="spec-lbl">Dormitorios<br>por depto.</div>
-              </div>
-              <div>
-                <div class="spec-val">ABC1</div>
-                <div class="spec-lbl">Categoría<br>terminaciones</div>
+        <div class="gallery">
+          <a class="lead" href="assets/proyectos/moreno-1.jpg" target="_blank" rel="noopener"><img src="assets/proyectos/moreno-1.jpg" alt="Fachada de Dohko Moreno" loading="lazy"></a>
+          <a class="thumb" href="assets/proyectos/moreno-2.jpg" target="_blank" rel="noopener"><img src="assets/proyectos/moreno-2.jpg" alt="Estar con vista a la ciudad" loading="lazy"></a>
+          <a class="thumb" href="assets/proyectos/moreno-3.jpg" target="_blank" rel="noopener"><img src="assets/proyectos/moreno-3.jpg" alt="Comedor y cocina" loading="lazy"></a>
+          <a class="thumb" href="assets/proyectos/moreno-4.jpg" target="_blank" rel="noopener"><img src="assets/proyectos/moreno-4.jpg" alt="Cocina con aire y luz" loading="lazy"></a>
+        </div>
+
+        <div class="project-stats">
+          <div class="project-stat"><div class="pstat-val">160 m²</div><div class="pstat-lbl">Piso<br>exclusivo</div></div>
+          <div class="project-stat"><div class="pstat-val">3</div><div class="pstat-lbl">Dormitorios<br>1 en suite</div></div>
+          <div class="project-stat"><div class="pstat-val">3</div><div class="pstat-lbl">Baños<br>por unidad</div></div>
+          <div class="project-stat"><div class="pstat-val">13</div><div class="pstat-lbl">Cocheras<br>c/ montacoche</div></div>
+          <div class="project-stat"><div class="pstat-val">ABC1</div><div class="pstat-lbl">Categoría<br>terminaciones</div></div>
+        </div>
+
+        <div class="project-cols">
+          <div>
+            <div class="col-title">Unidades</div>
+            <div class="unit">
+              <div class="unit-top"><span class="unit-type">Planta tipo · Piso exclusivo</span><span class="unit-area">160 m²</span></div>
+              <p class="unit-detail">142 m² cubierta + 18 m² semicubierta. Estar-comedor de 42 m², 3 dormitorios (1 en suite), cocina independiente + comedor diario, lavadero, 3 baños y balcón terraza con parrillero.</p>
+            </div>
+            <div class="unit">
+              <div class="unit-top"><span class="unit-type">Dúplex</span><span class="unit-area">158 m²</span></div>
+              <p class="unit-detail">105 m² cubierta + 53 m² abierta. Distribución en 2 plantas (social / privado), 3 dormitorios con salida a balcón, gran patio exclusivo y cocina integrada al frente con isla desayunador.</p>
+            </div>
+            <div class="amenities">
+              <div class="col-title">Amenities &amp; diferenciales</div>
+              <div class="tag-list">
+                <span class="tag">Piscina elevada 10.000 L</span>
+                <span class="tag">Quincho 15 pers.</span>
+                <span class="tag">Solarium + duchas</span>
+                <span class="tag">Parrillero</span>
+                <span class="tag">Hall doble altura</span>
+                <span class="tag">Grupo electrógeno</span>
+                <span class="tag">Control de acceso</span>
               </div>
             </div>
-            <div class="sidebar-contact">
-              <p>Consultas e información</p>
-              <a href="mailto:consultas@a2online.com.ar" class="btn-gold">
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><path d="M1 2h12a.5.5 0 01.5.5v8a.5.5 0 01-.5.5H1a.5.5 0 01-.5-.5v-8A.5.5 0 011 2zm6 5l5-3.5H2L7 7zm-5.5.8V10h11V7.8L7 11 1.5 7.8z"/></svg>
-                consultas@a2online.com.ar
+          </div>
+          <aside>
+            <div class="col-title">Puntos de interés</div>
+            <ul class="poi-list">
+              <li>Polo Gastronómico "Pichincha" <b>350 m</b></li>
+              <li>Parque Colectividades <b>450 m</b></li>
+              <li>Río Paraná <b>500 m</b></li>
+              <li>Parque España <b>530 m</b></li>
+              <li>Microcentro Rosario <b>1 km</b></li>
+              <li>Av. Pellegrini <b>2,1 km</b></li>
+            </ul>
+            <div class="project-foot">
+              <span class="project-credit">Proyecta <b>ä2</b> · Construye <b>IL Muro</b></span>
+              <a href="mailto:consultas@a2online.com.ar?subject=Consulta%20Dohko%20Moreno" class="card-mail">
+                <svg viewBox="0 0 16 16" fill="currentColor"><path d="M2 3h12a1 1 0 011 1v8a1 1 0 01-1 1H2a1 1 0 01-1-1V4a1 1 0 011-1zm6 5.6L3.5 5H12.5L8 8.6zM3 6.2V11h10V6.2L8 9.8 3 6.2z"/></svg>
+                Consultar
               </a>
             </div>
-          </div>
-
-          <!-- badge -->
-          <div style="display:flex; align-items:center; gap:1rem; padding:1.5rem 0; border-top: 1px solid rgba(201,168,76,0.1);">
-            <div style="width:38px;height:38px;background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.2);border-radius:4px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-              <span style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:1rem;color:var(--gold);letter-spacing:-1px;"><span style="color:var(--teal);">ä</span>2</span>
-            </div>
-            <div>
-              <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);opacity:0.6;">Desarrollado por</div>
-              <div style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:0.9rem;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.6);">ä2 Arquitectura</div>
-            </div>
-          </div>
+          </aside>
         </div>
-      </div>
+      </article>
+
+      <!-- DOHKO ESPAÑA -->
+      <article class="project reveal">
+        <div class="project-head">
+          <div>
+            <span class="project-label">Proyecto 02 — 2022</span>
+            <h3 class="project-name">Dohko <span>España</span></h3>
+            <p class="project-locale">España 122 — Rosario, Centro</p>
+          </div>
+          <p class="project-memoria">A metros del frente costero y del Río Paraná, con terminaciones de categoría de lujo —Purastone, Vitte-Portinari, griferías Hansgroe— y una terraza social con vista abierta a la ciudad.</p>
+        </div>
+
+        <div class="gallery">
+          <a class="lead" href="assets/proyectos/espana-1.jpg" target="_blank" rel="noopener"><img src="assets/proyectos/espana-1.jpg" alt="Cocina con isla de mármol de Dohko España" loading="lazy"></a>
+          <a class="thumb" href="assets/proyectos/espana-2.jpg" target="_blank" rel="noopener"><img src="assets/proyectos/espana-2.jpg" alt="Estar y comedor" loading="lazy"></a>
+          <a class="thumb" href="assets/proyectos/espana-3.jpg" target="_blank" rel="noopener"><img src="assets/proyectos/espana-3.jpg" alt="Balcón terraza" loading="lazy"></a>
+          <a class="thumb" href="assets/proyectos/espana-4.jpg" target="_blank" rel="noopener"><img src="assets/proyectos/espana-4.jpg" alt="Fachada en planta baja" loading="lazy"></a>
+        </div>
+
+        <div class="project-stats">
+          <div class="project-stat"><div class="pstat-val">216 m²</div><div class="pstat-lbl">Piso máximo<br>1° piso</div></div>
+          <div class="project-stat"><div class="pstat-val">3</div><div class="pstat-lbl">Dormitorios<br>1 en suite</div></div>
+          <div class="project-stat"><div class="pstat-val">3</div><div class="pstat-lbl">Baños<br>+ opción office</div></div>
+          <div class="project-stat"><div class="pstat-val">12</div><div class="pstat-lbl">Cocheras<br>+ 11 bauleras</div></div>
+          <div class="project-stat"><div class="pstat-val">ABC1</div><div class="pstat-lbl">Categoría<br>terminaciones</div></div>
+        </div>
+
+        <div class="project-cols">
+          <div>
+            <div class="col-title">Unidades</div>
+            <div class="unit">
+              <div class="unit-top"><span class="unit-type">1° piso · Piso exclusivo</span><span class="unit-area">216 m²</span></div>
+              <p class="unit-detail">152 m² cubierta + 4 m² semicubierta + 60 m² de patio. 3 dormitorios (1 en suite), lavadero, 3 baños, patio y opción office.</p>
+            </div>
+            <div class="unit">
+              <div class="unit-top"><span class="unit-type">Planta tipo</span><span class="unit-area">175 m²</span></div>
+              <p class="unit-detail">155 m² cubierta + 20 m² semicubierta. 3 dormitorios (1 en suite), lavadero, 3 baños, balcón terraza y opción office. Posibilidad de doble cochera y doble baulera por unidad.</p>
+            </div>
+            <div class="amenities">
+              <div class="col-title">Amenities &amp; diferenciales</div>
+              <div class="tag-list">
+                <span class="tag">Terraza SUM 50 pers.</span>
+                <span class="tag">Pileta + solarium</span>
+                <span class="tag">Parrillero c/ isla</span>
+                <span class="tag">Ducha + toilette</span>
+                <span class="tag">Hall doble altura</span>
+                <span class="tag">Grupo electrógeno</span>
+                <span class="tag">Terminaciones de lujo</span>
+              </div>
+            </div>
+          </div>
+          <aside>
+            <div class="col-title">Puntos de interés</div>
+            <ul class="poi-list">
+              <li>Río Paraná <b>200 m</b></li>
+              <li>Sanatorio Británico <b>200 m</b></li>
+              <li>Bv. Oroño <b>600 m</b></li>
+              <li>Polo Gastronómico "Pichincha" <b>700 m</b></li>
+              <li>Macrocentro Rosario <b>900 m</b></li>
+              <li>Monumento a la Bandera <b>1,8 km</b></li>
+            </ul>
+            <div class="project-foot">
+              <span class="project-credit">Proyecta <b>ä2</b> · Construye <b>IL Muro</b></span>
+              <a href="mailto:consultas@a2online.com.ar?subject=Consulta%20Dohko%20Espa%C3%B1a" class="card-mail">
+                <svg viewBox="0 0 16 16" fill="currentColor"><path d="M2 3h12a1 1 0 011 1v8a1 1 0 01-1 1H2a1 1 0 01-1-1V4a1 1 0 011-1zm6 5.6L3.5 5H12.5L8 8.6zM3 6.2V11h10V6.2L8 9.8 3 6.2z"/></svg>
+                Consultar
+              </a>
+            </div>
+          </aside>
+        </div>
+      </article>
     </div>
   </section>
 
   <!-- CONTACTO -->
   <section id="contacto">
     <div class="contacto-inner">
-      <div class="contacto-top">
-        <p class="section-label" style="justify-content:center;"><span></span>Contacto</p>
-        <h2 class="section-title reveal" style="margin-top:0.5rem;">HABLEMOS</h2>
-        <p class="reveal rv-d1" style="margin-top:1rem;">Enviá tu archivo o consultá lo que necesites. Respondemos rápido.</p>
-      </div>
+      <p class="eyebrow reveal">Contacto</p>
+      <h2 class="contacto-title reveal rv-d1">Hablemos</h2>
+      <p class="contacto-sub reveal rv-d1">Contanos tu proyecto o consultá lo que necesites. Respondemos rápido.</p>
 
-      <div class="contact-cards-row">
-
-        <div class="contact-card reveal rv-d1">
-          <svg class="clip" viewBox="0 0 28 44" fill="none" style="position:absolute;top:-28px;left:50%;transform:translateX(-50%);width:28px;">
-            <rect x="10" y="0" width="8" height="20" rx="4" fill="#1A1A2E"/>
-            <rect x="8" y="16" width="12" height="6" rx="2" fill="#2D2D3E"/>
-            <rect x="9" y="22" width="10" height="22" rx="2" fill="#1A1A2E" opacity="0.7"/>
-          </svg>
-
-          <div class="contact-type">Ploteos &mdash; Sede Estudio</div>
-          <div class="contact-name">ESTUDIO</div>
-          <div class="contact-hours-mini">Retiro: 8–14hs y 16–20hs &nbsp;|&nbsp; Recepción: 24hs</div>
-          <div class="contact-divider"></div>
-          <a href="mailto:consultas@a2online.com.ar" class="card-email-link">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" opacity="0.6"><path d="M2 3h12a1 1 0 011 1v8a1 1 0 01-1 1H2a1 1 0 01-1-1V4a1 1 0 011-1zm6 5.6L3.5 5H12.5L8 8.6zM3 6.2V11h10V6.2L8 9.8 3 6.2z"/></svg>
-            consultas@a2online.com.ar
-          </a>
+      <div class="contact-grid reveal rv-d2">
+        <div class="contact-item">
+          <div class="ci-label">Email</div>
+          <a href="mailto:consultas@a2online.com.ar">consultas@a2online.com.ar</a>
         </div>
-
-        <div class="contact-card reveal rv-d2">
-          <svg class="clip" viewBox="0 0 28 44" fill="none" style="position:absolute;top:-28px;left:50%;transform:translateX(-50%);width:28px;">
-            <rect x="10" y="0" width="8" height="20" rx="4" fill="#1A1A2E"/>
-            <rect x="8" y="16" width="12" height="6" rx="2" fill="#2D2D3E"/>
-            <rect x="9" y="22" width="10" height="22" rx="2" fill="#1A1A2E" opacity="0.7"/>
-          </svg>
-
-          <div class="contact-type">Ploteos &mdash; Sede Facultad</div>
-          <div class="contact-name">FACULTAD</div>
-          <div class="contact-hours-mini">Retiro: 7–22hs &nbsp;|&nbsp; Recepción: 24hs</div>
-          <div class="contact-divider"></div>
-          <a href="mailto:a2ploteos.facultad@gmail.com" class="card-email-link">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" opacity="0.6"><path d="M2 3h12a1 1 0 011 1v8a1 1 0 01-1 1H2a1 1 0 01-1-1V4a1 1 0 011-1zm6 5.6L3.5 5H12.5L8 8.6zM3 6.2V11h10V6.2L8 9.8 3 6.2z"/></svg>
-            a2ploteos.facultad@gmail.com
-          </a>
+        <div class="contact-item">
+          <div class="ci-label">Teléfono</div>
+          <a href="tel:+543414823807">0341 482 3807</a>
         </div>
-
+        <div class="contact-item">
+          <div class="ci-label">Instagram</div>
+          <a href="https://instagram.com/a2.arquitectura" target="_blank" rel="noopener">@a2.arquitectura</a>
+        </div>
+        <div class="contact-item">
+          <div class="ci-label">Web</div>
+          <a href="https://a2online.com.ar" target="_blank" rel="noopener">a2online.com.ar</a>
+        </div>
       </div>
 
-      <!-- website note -->
-      <div class="reveal" style="text-align:center;margin-top:3rem;opacity:0.4;">
-        <p style="font-family:'Barlow',sans-serif;font-size:0.85rem;color:var(--dark);">
-          También podés visitarnos en &nbsp;<a href="https://a2online.com.ar" target="_blank" style="color:var(--teal-dark);font-weight:600;text-decoration:none;">a2online.com.ar</a>
-        </p>
-      </div>
+      <p class="contacto-note reveal">¿Buscás ploteos? Visitá la sección de <a href="ploteos.html">Ploteos &amp; Servicios</a>.</p>
     </div>
   </section>
 
   <!-- FOOTER -->
   <footer>
-    <div class="footer-inner">
-      <div class="footer-brand">
-        <div class="footer-logo-badge"><span class="uml">ä</span>2</div>
-        <div>
-          <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:0.62rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:0.2rem;">Arquitectura &amp; Services</div>
-          <div class="footer-tagline">simplificando<b>tus</b>trabajos</div>
-        </div>
+    <div class="footer-grid">
+      <div>
+        <img src="assets/a2arq-full-dark.png" alt="ä2 Arquitectura" class="footer-logo-img">
+        <div class="footer-copyright">Estudio de arquitectura · Rosario</div>
       </div>
-
-      <div class="footer-center">
-        <a href="#ploteos">Ploteos</a>
-        <a href="#como-funciona">¿Cómo funciona?</a>
+      <div class="footer-col">
+        <div class="footer-col-title">Accesos</div>
         <a href="#estudio">Estudio</a>
-        <a href="#dohko">Proyectos</a>
+        <a href="#proyectos">Proyectos</a>
+        <a href="ploteos.html">Ploteos</a>
         <a href="#contacto">Contacto</a>
       </div>
-
-      <div class="footer-right">
-        <a href="mailto:consultas@a2online.com.ar">consultas@a2online.com.ar</a><br>
-        <a href="mailto:a2ploteos.facultad@gmail.com">a2ploteos.facultad@gmail.com</a>
+      <div class="footer-col">
+        <div class="footer-col-title">Contacto</div>
+        <p>Rosario, Argentina</p>
+        <a class="lower" href="mailto:consultas@a2online.com.ar">consultas@a2online.com.ar</a>
+        <a class="lower" href="tel:+543414823807">0341 482 3807</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Seguinos</div>
+        <a href="https://instagram.com/a2.arquitectura" target="_blank" rel="noopener">Instagram</a>
+        <a class="lower" href="https://a2online.com.ar" target="_blank" rel="noopener">a2online.com.ar</a>
       </div>
     </div>
-    <div class="footer-copy">
-      © 2024 ä2 Arquitectura &amp; Services &nbsp;&mdash;&nbsp; Córdoba, Argentina &nbsp;&mdash;&nbsp; a2online.com.ar
+    <div class="footer-bottom">
+      <span>© 2024 ä2 Arquitectura — Rosario, Argentina</span>
+      <a class="footer-credit" href="https://dossoles.netlify.app/" target="_blank" rel="noopener">Construido por <b>2S2D</b></a>
     </div>
   </footer>
 
   <script>
-    // Scroll reveal
-    const revealEls = document.querySelectorAll('.reveal');
     const io = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          e.target.classList.add('in');
-          io.unobserve(e.target);
-        }
-      });
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
     }, { threshold: 0.12 });
-    revealEls.forEach(el => io.observe(el));
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
-    // Nav: active section highlight
-    const sections = document.querySelectorAll('section[id], footer');
-    const navLinks = document.querySelectorAll('.nav-links a');
-
-    const sectionObserver = new IntersectionObserver((entries) => {
+    const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
+    const secObserver = new IntersectionObserver((entries) => {
       entries.forEach(e => {
-        if (e.isIntersecting) {
-          navLinks.forEach(a => {
-            a.style.opacity = a.getAttribute('href') === '#' + e.target.id ? '1' : '0.45';
-          });
-        }
+        if (e.isIntersecting) navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + e.target.id));
       });
     }, { threshold: 0.4 });
+    document.querySelectorAll('section[id]').forEach(s => secObserver.observe(s));
 
-    sections.forEach(s => sectionObserver.observe(s));
-
-    // Nav scroll transparency
     const nav = document.querySelector('nav');
     window.addEventListener('scroll', () => {
-      if (window.scrollY > 60) {
-        nav.style.boxShadow = '0 2px 24px rgba(26,26,46,0.08)';
-      } else {
-        nav.style.boxShadow = 'none';
-      }
+      nav.style.boxShadow = window.scrollY > 40 ? '0 1px 0 rgba(0,0,0,0.06)' : 'none';
     }, { passive: true });
   </script>
-
 </body>
 </html>
